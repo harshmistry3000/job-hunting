@@ -1,64 +1,52 @@
-import { application } from "express";
 import mongoose from "mongoose";
-import { type } from "os";
-import { title } from "process";
 
 const jobSchema = new mongoose.Schema({
-
     title: {
         type: String,
-        required: ture
+        required: true
     },
-
     description: {
         type: String,
-        required: ture
+        required: true
     },
-
     requirements: [{
         type: String
     }],
-
     salary: {
         type: Number,
-        required: ture
+        required: true
     },
-
+    experienceLevel:{
+        type:Number,
+        required:true,
+    },
     location: {
         type: String,
-        required: ture
+        required: true
     },
-
     jobType: {
         type: String,
-        required: ture
+        required: true
     },
-
     position: {
-        type: String,
-        required: ture
+        type: Number,
+        required: true
     },
-
     company: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Company',
-        required: ture
+        required: true
     },
-
     created_by: {
-
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: ture
+        required: true
     },
-
-    applications: [{
-
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Application',
-
-    }]
-
+    applications: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Application',
+        }
+    ]
 },{timestamps:true});
- 
 export const Job = mongoose.model("Job", jobSchema);
