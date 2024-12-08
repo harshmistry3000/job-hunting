@@ -5,6 +5,9 @@ import { Input } from '../ui/input'
 import { RadioGroup, } from '../ui/radio-group'
 import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { USER_API_END_POINT } from '@/utils/constant'
+import { toast } from 'sonner'
 
 const Login = () => {
 
@@ -20,8 +23,24 @@ const Login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
-  }
+    
+    try {
+        const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true,
+        });
+        if (res.success) {
+            navigate("/");
+            toast.success(res.message);
+        }
+
+    } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+    }
+}
 
   return (
     <div>
@@ -67,6 +86,7 @@ const Login = () => {
                 />
                 <Label htmlFor="r3">Student</Label>
               </div>
+
               <div className="flex items-center space-x-2">
                 <Input
                   type="radio"
@@ -83,7 +103,7 @@ const Login = () => {
 
 
           </div>
-          <Button type="submit" text className="w-full my-4 bg-[#0077b6] hover:bg-[#023e8a]">Login</Button>
+          <Button type="submit" text="Submit" className="w-full my-4 bg-[#0077b6] hover:bg-[#023e8a]">Login</Button>
           <span className='text-[#001D3D] text-sm'>Don't have  an account? <Link to="/signup" className="text-[#219ebc]" >Signup</Link></span>
         </form>
       </div>

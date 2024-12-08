@@ -15,13 +15,13 @@ dotenv.config({});
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const corsOptions ={
-    origin:'http//localhost:5173',
-    Credentials:true
-}
+const corsOptions = {
+    origin: 'http//localhost:5173',
+    Credentials: true
+} 
 app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
@@ -29,7 +29,7 @@ const PORT = process.env.PORT || 3000;
 
 // api 
 
-app.use("/api/v1/user",userRoute);
+app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
@@ -38,6 +38,6 @@ app.use("/api/v1/application", applicationRoute);
 app.listen(PORT, () => {
     connectDB();
     console.log(`Example app listening on port ${PORT}`)
-  })
+})
 
-  // mongodb+srv://harshmistry3000:zHDYWbwtDBDW6NVy@cluster0.q1kfs.mongodb.net/ 
+// mongodb+srv://harshmistry3000:zHDYWbwtDBDW6NVy@cluster0.q1kfs.mongodb.net/ 
