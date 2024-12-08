@@ -60,11 +60,8 @@ const Signup = () => {
 
         } catch (error) {
 
-            //     const errorMessage = error.response?.data?.message;
-            // toast.error(errorMessage);
-
-            console.log(error);
-            toast.error(error.message);
+            console.log(error); 
+            toast.error(error.response.data.message);
 
         }
     }
