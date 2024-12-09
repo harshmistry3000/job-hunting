@@ -52,10 +52,10 @@ const Signup = () => {
                 },
                 withCredentials: true,
             });
-            if (res.success) {
-                console.log(res.message)
+            if (res.data.success) {
+            
                 navigate("/login");
-                toast.success(res.message);
+                toast.success(res.data.message);
             }
 
         } catch (error) {
@@ -121,7 +121,7 @@ const Signup = () => {
                                 <Input
                                     type="radio"
                                     name="role"
-                                    value="Student"
+                                    value="student"
                                     checked={input.role == 'student'}
                                     onChange={changeEventHandler}
                                     className="cursor-pointer"

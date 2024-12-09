@@ -4,7 +4,7 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { RadioGroup, } from '../ui/radio-group'
 import { Button } from '../ui/button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
@@ -17,6 +17,8 @@ const Login = () => {
     password: "",
     role: "",
   })
+
+const navigate = useNavigate();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -31,14 +33,16 @@ const Login = () => {
             },
             withCredentials: true,
         });
-        if (res.success) {
+        // console.log(res.data.success);
+        
+        if (res.data.success) {
             navigate("/");
-            toast.success(res.message);
+            toast.success(res.data.message);
         }
 
     } catch (error) {
         console.log(error);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
     }
 }
 
@@ -79,7 +83,7 @@ const Login = () => {
                 <Input
                   type="radio"
                   name="role"
-                  value="Student"
+                  value="student"
                   checked={input.role == 'student'}
                   onChange={changeEventHandler}
                   className="cursor-pointer"
