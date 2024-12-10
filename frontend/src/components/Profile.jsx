@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './shared/Navbar'
 import { Avatar } from './ui/avatar'
 import { AvatarImage } from '@radix-ui/react-avatar'
@@ -7,10 +7,13 @@ import { Contact, Mail, Pen } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Label } from './ui/label'
 import AppliedJobTable from './AppliedJobTable'
+import UpdateProfileDialog from './UpdateProfileDialog'
 
 const skills = ["Html", "Css", "Js", "Three.js", "react.js"]
+const isResume = true; 
+
 const Profile = () => {
-    const isResume = true;
+    const [open,setOpen] = useState(false)
     return (
         <div>
             <Navbar />
@@ -27,7 +30,7 @@ const Profile = () => {
                             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem, adipisci?</p>
                         </div>
                     </div>
-                    <Button className="text-right" variant="outline" ><Pen /></Button>
+                    <Button  onClick={()=> setOpen(true)} className="text-right" variant="outline" ><Pen /></Button>
                 </div>
 
 
@@ -63,6 +66,7 @@ const Profile = () => {
                     <h1 className='font-bold text-lg my-5' >Applied Jobs</h1>
                     <AppliedJobTable/>
                 </div>
+                <UpdateProfileDialog open={open} setopen={setOpen}/>
         </div>
     )
 }
