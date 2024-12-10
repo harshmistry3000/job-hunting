@@ -9,7 +9,7 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoading } from '@/redux/authSlice'
+import { setLoading, setUser } from '@/redux/authSlice'
 import store from '@/redux/store'
 import { Loader2 } from 'lucide-react'
 
@@ -22,39 +22,40 @@ const Login = () => {
     role: "",
   })
 
-  const {loading} = useSelector(store=>store.auth);
-const navigate = useNavigate();
-const dispatch = useDispatch();
+  const { loading } = useSelector(store => store.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
   const submitHandler = async (e) => {
     e.preventDefault();
-    
+
     try {
-        dispatch(setLoading(true)); // using by redux
-        const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            withCredentials: true,
-        });
-        // console.log(res.data.success);
-        
-        if (res.data.success) {
-            navigate("/");
-            toast.success(res.data.message);
-        }
+      dispatch(setLoading(true)); // using by redux
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        withCredentials: true,
+      });
+      // console.log(res.data.success);
+
+      if (res.data.success) {
+        dispatch(setUser(res.data.user));
+        navigate("/");
+        toast.success(res.data.message);
+      }
 
     } catch (error) {
-        console.log(error);
-        toast.error(error.response.data.message);
+      console.log(error);
+      toast.error(error.response.data.message);
     }
-    finally{
+    finally {
       dispatch(setLoading(false));
     }
-}
+  }
 
   return (
     <div>
@@ -119,9 +120,9 @@ const dispatch = useDispatch();
           </div>
           {
             // --- for loding button 
-            loading ? <Button className="w-full my-4 bg-[#135c84] hover:bg-[#02028a]"> <Loader2 className='mr-2 h-4 w-4 animate-spin'/> Please Wait </Button> : <Button type="submit" text="Submit" className="w-full my-4 bg-[#0077b6] hover:bg-[#023e8a]">Login</Button>
+            loading ? <Button className="w-full my-4 bg-[#135c84] hover:bg-[#02028a]"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait </Button> : <Button type="submit" text="Submit" className="w-full my-4 bg-[#0077b6] hover:bg-[#023e8a]">Login</Button>
           }
-              <span className='text-[#001D3D] text-sm'>Don't have  an account? <Link to="/signup" className="text-[#219ebc]" >Signup</Link></span>
+          <span className='text-[#001D3D] text-sm'>Don't have  an account? <Link to="/signup" className="text-[#219ebc]" >Signup</Link></span>
         </form>
       </div>
     </div>
